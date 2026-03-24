@@ -1,3 +1,5 @@
+const GOOGLE_SHEETS_WEB_APP_URL = "https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_ID/exec";
+
 const form = document.getElementById("enquiryForm");
 const submitBtn = document.getElementById("submitBtn");
 const statusMsg = document.getElementById("statusMsg");
@@ -17,7 +19,7 @@ form.addEventListener("submit", function(e) {
     phone: formData.get("student_contact")
   };
 
-  fetch("YOUR_WEB_APP_URL", {
+  fetch(GOOGLE_SHEETS_WEB_APP_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
