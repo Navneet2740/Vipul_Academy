@@ -19,6 +19,14 @@ form.addEventListener("submit", function(e) {
     phone: formData.get("student_contact")
   };
 
+  if (!GOOGLE_SHEETS_WEB_APP_URL.includes("https://script.google.com/macros/s/")) {
+    statusMsg.innerText = "❌ Configure GOOGLE_SHEETS_WEB_APP_URL in script.js with the deployed Apps Script endpoint.";
+    statusMsg.style.color = "red";
+    submitBtn.disabled = false;
+    submitBtn.innerText = "Submit Enquiry";
+    return;
+  }
+
   fetch(GOOGLE_SHEETS_WEB_APP_URL, {
     method: "POST",
     headers: {
@@ -26,20 +34,25 @@ form.addEventListener("submit", function(e) {
     },
     body: JSON.stringify(data)
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("HTTP " + res.status + " " + res.statusText);
+    }
+    return res.json();
+  })
   .then(response => {
     if (response.status === "success") {
       statusMsg.innerText = "✅ Enquiry submitted successfully!";
       statusMsg.style.color = "green";
       form.reset();
     } else {
-      statusMsg.innerText = "❌ Something went wrong!";
-      statusMsg.style.color = "red";
+      throw new Error(response.message || "Unknown response from server");
     }
   })
   .catch(error => {
-    statusMsg.innerText = "❌ Failed to connect!";
+    statusMsg.innerText = `❌ Submission failed: ${error.message}`;
     statusMsg.style.color = "red";
+    console.error("Form submit error:", error);
   })
   .finally(() => {
     submitBtn.disabled = false;
