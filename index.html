@@ -58,11 +58,14 @@
 <div class="hero-form">
 <h3>Quick Enquiry Form</h3>
 <p>Just 4 fields—share requirement and we’ll reach out quickly.</p>
-<form action="#" method="post" class="form-short">
+
+<form id="enquiryForm" action="#" method="post" class="form-short">
+
 <div class="form-group">
 <label for="student-name">Student Name</label>
 <input type="text" id="student-name" name="student_name" placeholder="Enter student name" required>
 </div>
+
 <div class="form-group">
 <label for="student-class">Class</label>
 <select id="student-class" name="student_class" required>
@@ -77,6 +80,7 @@
 <option value="12">12</option>
 </select>
 </div>
+
 <div class="form-group">
 <label for="student-board">Board</label>
 <select id="student-board" name="student_board" required>
@@ -86,11 +90,16 @@
 <option value="SSC">SSC</option>
 </select>
 </div>
+
 <div class="form-group">
 <label for="student-contact">Contact Number</label>
 <input type="tel" id="student-contact" name="student_contact" placeholder="Enter phone number" required>
 </div>
-<button class="btn primary" type="submit">Submit Enquiry</button>
+
+<button class="btn primary" id="submitBtn" type="submit">Submit Enquiry</button>
+
+<p id="statusMsg"></p>
+
 </form>
 </div>
 
